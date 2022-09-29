@@ -1,0 +1,142 @@
+﻿@model Mentor.ViewModel.GeneralViewModel
+
+@inject Mentor.IHelper.IUserHelper _IUserHelper;
+
+@{
+    var logedInUser = _IUserHelper.FindByUser(User.Identity.Name);
+}
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<main id="main" class="main">
+
+    @if (logedInUser.isCompleted == false)
+    {
+        <div class="row">
+            <div class="alert alert-primary alert-dismissible fade show mt-1 col-sm-12 col-lg-6 col-md-6" role="alert">
+                <p class="bi bi-star me-1">
+                    Admin final Registration process <a asp-controller="Admin" asp-action="CompleteAdminForm">CLICK HERE</a>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </p>
+            </div>
+
+        </div>
+    }
+    else
+    {
+
+        <div class="pagetitle">
+            <h1>Dashboard</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </nav>
+        </div>
+        <section class="section dashboard">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="card recent-sales overflow-auto">
+                                <div class="card-body">
+                                    <h5 class="card-title">All Users</h5>
+
+                                    <table class="table table-borderless datatable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Full Name</th>
+                                                <th scope="col">Phone Number</th>
+                                                <th scope="col">Hostel</th>
+                                                <th scope="col">Room</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        @if (Model.ApplicationUserViewModels.Any())
+                                        {
+                                            foreach (var user in Model.ApplicationUserViewModels)
+                                            {
+                                                <tbody>
+                                                    <tr>
+                                                        <td>@user.FirstName @user.LastName</td>
+                                                        <td>@user.PhoneNumber</td>
+                                                        <td><a href="#" class="text-primary">@user.Hostel?.Name</a></td>
+                                                        <td>@user.Room?.Name</td>
+                                                        @if (!user.Deactivated)
+                                                        {
+                                                            <td><span class="badge bg-success">Active</span></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td><span class="badge bg-danger">Deactive</span></td>
+                                                        }
+
+                                                    </tr>
+                                                </tbody>
+                                            }
+
+                                        }
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div>
+                       
+                        <div class="col-12">
+                            <div class="card top-selling overflow-auto">
+
+
+                                <div class="card-body pb-0">
+                                    <h5 class="card-title">Hostels And Number of Rooms in A hostel</h5>
+
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Hostels Name</th>
+                                                <th scope="col">DateCreated</th>
+                                                <th scope="col">Room Number</th>
+
+                                            </tr>
+                                        </thead>
+                                        @if (Model.HostelViewModels.Any())
+                                        {
+
+                                            <tbody>
+                                                @foreach (var hostel in Model.HostelViewModels)
+                                                {
+                                                    <tr>
+                                                        <td>@hostel.Name</td>
+                                                        <td>@hostel.DateCreated</td>
+                                                        <td>@hostel.Rooms</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        }
+
+
+
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </section>
+    }
+
+</main><!-- End #main -->

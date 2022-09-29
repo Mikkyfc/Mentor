@@ -3,3 +3,5 @@
 ################################################################################
 
 /Mentor/bin/Debug/net5.0
+/Mentor/obj
+/Mentor/wwwroot/fontawesome/svgs

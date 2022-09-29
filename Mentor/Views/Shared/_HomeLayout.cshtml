@@ -1,0 +1,291 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Mentor Hostel Management</title>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+   
+    <link rel="icon" href="~/img/downlogo.jpg" style="color: #00b4ef; ">
+    <link rel="apple-touch-icon" href="~/Mentor/assets/img/apple-touch-icon.png">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="~/Mentor/assets/vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="~/Mentor/assets/vendor/aos/aos.css">
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Mentor/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Mentor/assets/vendor/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/Mentor/assets/vendor/boxicons/css/boxicons.min.css">
+    <link rel="stylesheet" href="~/Mentor/assets/vendor/remixicon/remixicon.css">
+    <link rel="stylesheet" href="~/Mentor/assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="~/Mentor/assets/css/style.css">
+    <link rel="stylesheet" href="~/fontawesome/css/all.css">
+
+    <script>
+        function errorAlert(message) {
+            Swal.fire({
+                icon: 'error',
+                text: message,
+                confirmButtonColor: "#00A7EF",
+                timer: 30000,
+            })
+        }
+
+        function infoAlert(message) {
+            Swal.fire({
+                icon: 'info',
+                text: message,
+                confirmButtonColor: "#00A7EF",
+            })
+        }
+
+        function infoAlertWithStyles(message) {
+            Swal.fire({
+                title: 'Notification',
+                icon: 'info',
+                text: message,
+            })
+        }
+
+        function successAlert(message) {
+            Swal.fire({
+                icon: 'success',
+                text: message,
+                confirmButtonColor: "#00A7EF",
+                timer: 30000,
+            })
+        }
+
+        function newErrorAlert(message, url) {
+            Swal.fire({
+                icon: 'error',
+                text: message,
+                confirmButtonColor: "#00A7EF",
+            }).then((isConfirm) => {
+                if (isConfirm) {
+                    location.reload(url);
+                }
+            })
+        }
+
+        function newSuccessAlert(message, url) {
+            Swal.fire({
+                icon: 'success',
+                text: message,
+                confirmButtonColor: "#00A7EF",
+            }).then((isConfirm) => {
+                if (isConfirm) {
+                    location.reload(url);
+                }
+            })
+        }
+
+        function successAlertWithRedirect(message, url) {
+            swal.fire({
+                title: "Success",
+                text: message,
+                icon: "success",
+                timer: 30000,
+                confirmButtonColor: "#00A7EF",
+                overlay: "background - color: rgba(43, 165, 137, 0.45)",
+            }).then(function () {
+
+                location.href = url;
+            })
+        }
+
+
+        function errorAlertwithTwoButtons(yesUrl, noUrl, newUrl, errorTitle) {
+            swal({
+                title: errorTitle,
+                text: "",
+                icon: "error",
+                buttons: {
+                    cancle: "No",
+                    confirmButtonColor: "#00A7EF",
+                    change: "Yes",
+                    new: "Create Pin",
+                },
+            })
+                .then((status) => {
+                    debugger;
+                    switch (status) {
+                        case "change":
+                            location.href = yesUrl;
+                            break;
+                        case "new":
+                            location.href = newUrl;
+                            break;
+                        default:
+                            location.href = noUrl;
+                    }
+                });
+        }
+
+        function SweeTest(yesUrl, noUrl) {
+            Swal.fire({
+                title: "Unverified E-mail Address",
+                text: "Check your inbox Or Change email",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#00A7EF",
+                confirmButtonText: "Resend Email",
+                cancelButtonText: "Change Email",
+                cancelButtonColor: "#D3AF71",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            })
+                .then((result) => {
+                    debugger
+                    if (result.isConfirmed) {
+                        location.href = yesUrl
+                    }
+                    else {
+                        location.href = noUrl
+                    }
+
+                });
+        }
+    </script>
+</head>
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top mb-5">
+        <div class="container-fluid d-flex align-items-center">
+            <img src="~/img/downlogo.jpg" style="width: 50px; height: 70px; color: #00b4ef; " alt="">
+            <h1 class="logo me-auto ml-1"><a asp-controller="Home" asp-action="index">Mentor Hostel Management</a></h1>
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="active" asp-controller="Home" asp-action="index">Home </a></li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("User"))
+                        {
+                            <li><a asp-controller="User" asp-action="Index">Dashboard</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-controller="Admin" asp-action="Index">Dashboard</a></li>
+                        }
+
+                        <form class="" method="post" asp-controller="Account" asp-action="Logout">
+                            <button class="get-started-btn btn">LogOut</button>
+                        </form>
+
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Account" asp-action="UserRegisteration">Register</a></li>
+                        <li><a asp-controller="Account" asp-action="LogIn">LogIn</a></li>
+
+
+                    }
+
+                </ul>
+                
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header><!-- End Header -->
+    <div class="container-fluid my-3 pt-2">
+        <main role="main" class="py-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer id="footer">
+
+        <div class="footer-top">
+            <div class="container-fluid mt-0">
+                <div class="row">
+
+                    <div class="col-12  col-md-4 footer-contact">
+                        <h3>Mentor Hostel Management</h3>
+                        <p>
+                            A108 Adam Street <br>
+                            New Layout,Transkulu. NL 535022<br>
+                            Billy States <br><br>
+                            <strong>Phone:</strong> +1 5589 55488 55<br>
+                            <strong>Email:</strong> info@gmail.com<br>
+                        </p>
+                    </div>
+
+                    <div class="col-12  col-md-4 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a asp-controller="Home" asp-action="index">Home</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a asp-controller="Account" asp-action="UserRegisteration">Register</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a asp-controller="Account" asp-action="LogIn">Login</a></li>
+                            @*<li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>*@
+                        </ul>
+                    </div>
+
+                    @*<div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                        </ul>
+                    </div>*@
+
+                    <div class="col-12  col-md-4 footer-newsletter">
+                        <h4>Get Latest Updates</h4>
+                        <p>Subscribe to get latest firsthand updates.</p>
+                        <form action="" method="post">
+                            <input type="email" name="email"><input type="submit" value="Subscribe" placeholder="Email address">
+                        </form>
+                        <p class="lead px-2 px-md-3">
+                            <span class="small text-ghost-white mx-1">
+                                <a href="mailto:support@hostels.MentorHostelManagement.com" class="link-ghost-white"><i class="fas fa-envelope mr-1"></i> support@MentorHostelManagement.com</a>
+                            </span>
+                            <br>
+                            <span class="small text-primary mx-1">
+                                <a href="+2347033121121"></a>
+                            </span>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid d-md-flex py-4">
+
+            <div class="me-md-auto text-center text-md-start">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>Mentor Hostel Management</span></strong>. All Rights Reserved
+                </div>
+            </div>
+            <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  
+    <script src="~/Mentor/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+    <script src="~/js/sweetalert2.all.min.js"></script>
+    <script src="~/Mentor/assets/vendor/aos/aos.js"></script>
+    <script src="~/Mentor/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Mentor/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/js/Mentor.js"></script>
+    <script src="~/Mentor/assets/js/main.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

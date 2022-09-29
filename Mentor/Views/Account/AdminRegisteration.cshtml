@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewData["Title"] = "AdminRegisteration";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<div class="container-fluid mb-3 mt-5  p-5 ">
+
+    <div class="lay bg-light  col-7 offset-3 pb-2 shadow-lg " style="border-radius:50px; margin-bottom:-18px; ">
+        <div class="mb-3  text-dark rounded-sm p-3"> <h2 class="text-center text-uppercase ">Admin Form</h2></div>
+        <div class="row justify-content-center">
+            <div class="form-group col-4">
+                <label for="name" class="form-label text-md-right">First Name</label>
+                <div class="">
+                    <input id="firstName" type="text" class="form-control   rounded-3"  required autofocus="">
+                </div>
+            </div>
+
+            <div class="form-group col-4 ">
+                <label for="name" class="form-label text-md-right">Last Name</label>
+                <div class="">
+                    <input id="lastName" type="text" class="form-control rounded-3"  required autofocus="">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Second row -->
+        <div class="row justify-content-center">
+
+            <div class="form-group col-4">
+                <label for="email" class="form-label text-md-right">E-mail Address</label>
+                <div class="">
+                    <input id="email" type="text" class="form-control rounded-3"  required name="email">
+                </div>
+            </div>
+
+
+            <!-- third row -->
+
+            <div class="form-group col-4">
+                <label for="phone-input" class="form-label Required text-md-right">Phone Number</label>
+                <div class="">
+
+                    <input id="phoneNumber" type="tel" class="form-control rounded-3"  required name="phoneIn" value="" placeholder="+234-0706-3033-885">
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <!-- fifth row -->
+        <div class="row mb-3 justify-content-center">
+            <div class="form-group col-4">
+                <label for="ProfilePicture" class="form-label text-md-right">ProfilePicture</label>
+                <div class="">
+                    <input id="profilePicture" type="file" class="form-control  rounded-3" name="ProfilePicture"  required value="">
+                </div>
+            </div>
+            <div class="form-group col-4">
+                <label for="gender" class="form-label text-md-right">Gender</label>
+                <div class="">
+                    <select id="genderId" class="form-control  rounded-3"  required asp-items="@(new SelectList(@ViewBag.Gender,  "Id" ,"Name"))"> </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-2">
+            <div class="form-group col-4">
+                <label for="password" class="form-label text-md-right">Password</label>
+                <div class="">
+                    <input id="password" type="password" class="form-control rounded-3" name="password"  required value="">
+                </div>
+            </div>
+
+            <div class="form-group col-4">
+                <label for="password-confirm" class="form-label text-md-right">Confirm Password</label>
+                <div class="">
+                    <input id="confirmPassword" type="password" class="form-control rounded-3"  required name="password_confirmation">
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mx-5 ">
+            <div class="form-group col-12 text-center p-3">
+                <button role="button" class=" btn-block rounded-pill" style="width:50%" onclick="adminRegisteration()">Register</button>
+            </div>
+        </div>
+        <div class="row mx-5">
+            <div class="form-group col-12 ">
+                <p class="small mb-0">Already have an account? <a href="pages-login.html">Log in</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<div class="form-bg">
+    <div class="container  mb-3 mt-5  p-5">
+        <div class="row">
+            <div class=" offset-3 col-md-6">
+                <div class="form-horizontal  bg-light shadow-lg">
+                    <span class="heading text-white">LOGIN</span>
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="form-group help">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <i class="fa fa-lock"></i>
+                        <a href="#" class="fa fa-question-circle"></a>
+                    </div>
+                    <div class=" d-flex offset-1 mb-2"> <a asp-controller="Account" asp-action="ForgetPassword"><i onclick="forgetPassword()">Forget Password</i></a>  </div>
+                    <div class="form-group">
+                        <div class="main-checkbox">
+                            <input type="checkbox" value="None" id="checkbox1" name="check">
+                            <label for="checkbox1"></label>
+                        </div>
+                        <span class="text">Remember me</span>
+                        <button  role="button" class="btn btn-default" onclick="login()">login</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

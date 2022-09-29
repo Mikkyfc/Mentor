@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewData["Title"] = "CompleteRegistration";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>CompleteYourRegistration</h1>
+
+
+
+<div class="container-fluid mb-3 mt-3  p-5 ">
+
+    <div class="lay bg-light  col-7 offset-3 pb-2 shadow-lg " style="border-radius:50px; margin-bottom:-18px; ">
+        <div class="mb-3  text-dark rounded-sm p-3"> <h2 class="text-center text-uppercase ">Complete Registeration</h2></div>
+        <div class="row justify-content-center">
+            <input id="userId"  hidden />
+            <div class="form-group col-4">
+                <label for="nok" class="form-label text-md-right">Next of Kin's Name</label>
+                <div class="">
+                    <input id="nok" type="text" class="form-control rounded-3"style="border: 2px solid #11a3fc;"  name="nok"   value="">
+                </div>
+            </div>
+            <div class="form-group col-4">
+                <label for="nokno" class="form-label text-md-right">Next of Kin's Phone Number</label>
+                <div class="">
+                    <input id="nokno"  type="tel" class="form-control rounded-3" name="phoneIn"   placeholder="+234-0706-3033-885"style="border: 2px solid #11a3fc;"   value="">
+                </div>
+            </div>
+
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-group col-4">
+                <label for="address" class="form-label text-md-right">Home address</label>
+                <div class="">
+                    <input id="address" type="text" class="form-control rounded-3"style="border: 2px solid #11a3fc;"   name="address" value="">
+                </div>
+            </div>
+            <div class="form-group col-4">
+                <label for="Department" class="form-label text-md-right">Department</label>
+                <div class="">
+                    <select id="departmentId" class="form-control  rounded-3"style="border: 2px solid #11a3fc;"   asp-items="@(new SelectList(@ViewBag.Department,  "Id" ,"Name"))"> </select>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+           <div class="form-group col-4">
+                <label for="Country" class="form-label text-md-right">Country</label>
+                <div class="">
+                    <select id="countryId" class="form-control  rounded-3"style="border: 2px solid #11a3fc;"    asp-items="@(new SelectList(@ViewBag.Country,  "Id" ,"Name"))"> </select>
+                </div>
+            </div>
+            <div class="form-group col-4">
+                <label for="State" class="form-label text-md-right">state</label>
+                <div class="">
+                    <select id="stateId" class="form-control  rounded-3"   style="border: 2px solid #11a3fc;" > </select>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3 justify-content-center  mb-2">
+            <div class="form-group col-4 ml-4 mb-3">
+                <label for="about" class=" col-form-label">About</label>
+                <div class="col-8">
+                    <textarea name="about" class="form-control  rounded-3" id="about"  required style="height: 60px; width: 250px; border: 2px solid #11a3fc;"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mx-5 ">
+            <div class="form-group col-12 text-center p-3">
+                <button role="button" class=" btn-block rounded-pill" style="width: 80%; background: #00b4ef; color: #fff; border: none; font-size: 20px;" onclick="completeRegistration()">Submit</button>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+<script>
+     $(document).ready(function ()
+    {
+         $("#countryId").change(function ()
+        {
+             $("#stateId").empty();
+             debugger;
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetState", "User")', //we are calling json method
+                dataType: 'json',
+                data:
+                {
+                    countryId: $("#countryId").val()
+                },
+                success: function (getstates)
+                {
+                    debugger;
+                    $("#stateId").append('<option value="' + 0 + '">--Select State --</option>');
+                    $.each(getstates, function (i, getState)
+                    {
+                        $("#stateId").append('<option value="' + getState.value + '">' + getState.text + '</option>');
+                    });
+                    $("#stateId").show();
+                },
+                error: function (ex)
+                {
+                errorAlert('Failed to retrieve States' + ex)
+                }
+            });
+           return false;
+         });
+
+
+     });
+</script>
